@@ -225,22 +225,26 @@ export class ClockWeatherCard extends LitElement {
     const apparentString = this.localize('misc.feels-like')
     const aqiString = this.localize('misc.aqi')
 
+    const weatherFontSizeStyle = this.config.weather_font_size ? `font-size: ${this.config.weather_font_size};` : ''
+    const timeFontSizeStyle = this.config.time_font_size ? `font-size: ${this.config.time_font_size};` : ''
+    const dateFontSizeStyle = this.config.date_font_size ? `font-size: ${this.config.date_font_size};` : ''
+
     return html`
       <clock-weather-card-today-left>
         <img class="grow-img" src=${icon} />
       </clock-weather-card-today-left>
       <clock-weather-card-today-right>
         <clock-weather-card-today-right-wrap>
-          <clock-weather-card-today-right-wrap-top>
+          <clock-weather-card-today-right-wrap-top style="${weatherFontSizeStyle}">
             ${this.config.hide_clock ? weatherString : localizedTemp ? `${weatherString}, ${localizedTemp}` : weatherString}
             ${this.config.show_humidity && localizedHumidity ? html`<br>${localizedHumidity}` : ''}
             ${this.config.apparent_sensor && apparentTemp ? html`<br>${apparentString}: ${localizedApparent}` : ''}
             ${this.config.aqi_sensor && aqi !== null ? html`<br><aqi style="background-color: ${aqiBackgroundColor}; color: ${aqiTextColor};">${aqi} ${aqiString}</aqi>` : ''}
           </clock-weather-card-today-right-wrap-top>
-          <clock-weather-card-today-right-wrap-center>
+          <clock-weather-card-today-right-wrap-center style="${timeFontSizeStyle}">
             ${this.config.hide_clock ? localizedTemp ?? 'n/a' : this.time()}
           </clock-weather-card-today-right-wrap-center>
-          <clock-weather-card-today-right-wrap-bottom>
+          <clock-weather-card-today-right-wrap-bottom style="${dateFontSizeStyle}">
             ${this.config.hide_date ? '' : this.date()}
           </clock-weather-card-today-right-wrap-bottom>
         </clock-weather-card-today-right-wrap>
@@ -452,7 +456,10 @@ export class ClockWeatherCard extends LitElement {
       time_zone: config.time_zone ?? undefined,
       show_decimal: config.show_decimal ?? false,
       apparent_sensor: config.apparent_sensor ?? undefined,
-      aqi_sensor: config.aqi_sensor ?? undefined
+      aqi_sensor: config.aqi_sensor ?? undefined,
+      time_font_size: config.time_font_size ?? undefined,
+      date_font_size: config.date_font_size ?? undefined,
+      weather_font_size: config.weather_font_size ?? undefined
     }
   }
 
